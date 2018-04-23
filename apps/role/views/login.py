@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from apps.role import models as mysql_db
 from apps.role.views import public_methods
 from django.http import JsonResponse
+from apps.role.views import user_info
 
 
 @csrf_exempt
@@ -15,16 +16,29 @@ def user_login(request):
         user_name = post["userName"]
         password = post["password"]
 
-        check_validity = mysql_db.Person.objects.get(user_name=user_name)
-        # check_validity = mysql_db.Person.objects.filter(user_name=user_name).values('user_id', 'user_type')
+        try:
 
-        if check_validity.password == password:
+            check_validity = mysql_db.Person.objects.get(user_name=user_name)
+            # check_validity = mysql_db.Person.objects.filter(user_name=user_name).values('user_id', 'user_type')
 
-            user_id = check_validity.user_id
-            user_type = check_validity.user_type
+            if check_validity.password == password:
 
-            response_message = {"message": "登陆成功", "userId": user_id, "userType": user_type}
+                user_id = check_validity.user_id
+                user_type = check_validity.user_type
 
-            response = public_methods.response_message("success", response_message, "100001")
+                response_message = {"message": "登陆成功", "userId": user_id, "userType": user_type}
 
-            return JsonResponse(response)
+                response = public_methods.response_message("success", response_message, "100001")
+
+                # user_info.get_user_info((user_id, user_type))
+
+                return JsonResponse(response)
+
+            else:
+                response = {"message": "用户名或密码错误"}
+                return JsonResponse(public_methods.response_message("fault", response, "100005"))
+
+        except:
+
+            response = {"message": "用户名或密码错误"}
+            return JsonResponse(public_methods.response_message("fault", response, "100005"))

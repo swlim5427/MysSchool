@@ -41,7 +41,7 @@ class Person(models.Model):
 class Teacher(models.Model):
 
     # 教师表
-
+    # teacher = models.ForeignKey('Person', null=True)
     user_id = models.CharField('用户id',  max_length=255, unique=True)
     wx = models.CharField('微信',  max_length=255, null=True)
     teach_type = models.CharField('教师类型',  max_length=255, null=True)
@@ -63,7 +63,7 @@ class Teacher(models.Model):
     '''
     user_id：用户id
     wx：微信
-    teach_type：教师类型（200001：儿童美术，200002：水墨书法，200003：混合）
+    teach_type：教师类型（200001：儿童美术，200002：水墨书法，200003：混合， 管理：0）
     age：年龄
     salary：工资
     school：毕业学校
@@ -77,8 +77,8 @@ class Teacher(models.Model):
 class Student(models.Model):
 
     # 学员表
-
-    user_id = models.CharField('用户id',  max_length=255, unique=True)
+    # student = models.ForeignKey('Person', null=True)
+    user_id = models.CharField('用户id', max_length=255, unique=True)
     wx = models.CharField('微信',  max_length=255, null=True)
     study_type = models.CharField('学员类型',  max_length=255, null=True)
     age = models.CharField('年龄',  max_length=255, null=True)

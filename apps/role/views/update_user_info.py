@@ -22,10 +22,6 @@ class UserInfo:
             self.age = self.post["age"]
             self.school = self.post["school"]
 
-            # if self.user_type == "0":
-            #     self.salary = self.param["salary"]
-            #     self.level = self.param["level"]
-
             if self.user_type == "1":
                 self.teach_type = self.param["teachType"]
 
