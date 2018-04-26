@@ -110,4 +110,5 @@ class Student(models.Model):
     leave_time：学完日期
     school：幼儿园/学校
     name：姓名
+    birthday：生日
     '''

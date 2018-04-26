@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^user_login/$', login.user_login),
     url(r'^update_user_info/$', update_user_info.UserInfo),
     url(r'^user_info/$', user_info.user_info),
+    url(r'^get_user_info/$', get_user_info.get_user_info),
 
     url(r'^admin/', admin.site.urls),
 ]
