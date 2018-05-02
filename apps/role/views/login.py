@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.views.decorators.csrf import csrf_exempt
-from apps.role import models as mysql_db
-from apps.role.views import public_methods
+
 from django.http import JsonResponse
-from apps.role.views import user_info
+from django.views.decorators.csrf import csrf_exempt
+
+from apps.role import models as mysql_db
+from pubulic import public_methods
 
 
 @csrf_exempt
@@ -36,9 +37,9 @@ def user_login(request):
 
             else:
                 response = {"message": "用户名或密码错误"}
-                return JsonResponse(public_methods.response_message("fault", response, "100005"))
+                return JsonResponse(public_methods.response_message("fault", response, "100005")).set_cookie("abc", "1")
 
         except:
 
             response = {"message": "用户名或密码错误"}
-            return JsonResponse(public_methods.response_message("fault", response, "100005"))
+            return JsonResponse(public_methods.response_message("fault", response, "100005")).set_cookie("sessionid", "1111")

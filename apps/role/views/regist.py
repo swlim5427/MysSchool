@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+
 from apps.role import models as mysql_db
-from apps.role.views import public_methods
+from pubulic import public_methods
 
 
 @csrf_exempt

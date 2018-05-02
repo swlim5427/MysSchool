@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from django.views.decorators.csrf import csrf_exempt
-from apps.role import models as mysql_db
-from itertools import chain
-from apps.role.views import public_methods
+
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+from apps.role import models as mysql_db
+from pubulic import public_methods
 
 
 @csrf_exempt

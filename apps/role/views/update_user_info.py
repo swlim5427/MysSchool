@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from apps.role import models as mysql_db
-from apps.role.views import public_methods
+from pubulic import public_methods
 
 
 @csrf_exempt
@@ -33,10 +34,6 @@ def UserInfo(request):
         person_table_update.update_time = public_methods.get_date_time(1, 1)
 
         if sex != "":
-            if sex == "女":
-                sex = "0"
-            else:
-                sex = "1"
             person_table_update.sex = sex
 
         if phone != "":
