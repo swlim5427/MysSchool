@@ -20,7 +20,7 @@ from apps.role.views import login
 from apps.role.views import update_user_info
 from apps.role.views import get_user_info
 from apps.role.views import user_info
-from apps.curriculum.views import curriculum_add
+from apps.curriculum.views import curriculum_add, curriculum_list, curriculum_edit
 
 
 urlpatterns = [
@@ -31,6 +31,9 @@ urlpatterns = [
     url(r'^user_info/$', user_info.user_info),
     url(r'^get_user_info/$', get_user_info.get_user_info),
     url(r'^curriculum_add/$', curriculum_add.curriculum_add),
+    url(r'^curriculum_list/$', curriculum_list.curriculum_list),
+    url(r'^assortment_list/$', curriculum_list.assortment_list),
+    url(r'^curriculum_edit/$', curriculum_edit.curriculum_edit),
 
     url(r'^admin/', admin.site.urls),
 ]

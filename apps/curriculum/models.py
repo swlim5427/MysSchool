@@ -9,8 +9,8 @@ from django.db import models
 class Assortment(models.Model):
 
     # 课程-分类
-    assortment_id = models.CharField('分类id', max_length=255, unique=True)
-    assortment_name = models.CharField('分类名', max_length=255, unique=True)
+    assortment_id = models.CharField('分类id', max_length=255, unique=True, null=True)
+    assortment_name = models.CharField('分类名', max_length=255, unique=True, null=True)
 
     def __unicode__(self):
         return self.assortment_id, self.assortment_name
@@ -21,13 +21,13 @@ class Assortment(models.Model):
     '''
 
 
-
 class Curriculum(models.Model):
 
     # 课程-字典表
-    curriculum_id = models.CharField('课程id', max_length=255, unique=True)
-    curriculum_name = models.CharField('课程名',  max_length=255, null=True)
+    curriculum_id = models.CharField('课程id', max_length=255, unique=True, null=True)
+    curriculum_name = models.CharField('课程名',  max_length=255, unique=True, null=True)
     assortment_id = models.CharField('课程分类id',  max_length=255, null=True)
+    status = models.CharField('状态',  max_length=255, null=True)
 
     def __unicode__(self):
         return self.curriculum_id, self.curriculum_name, self.assortment_id
@@ -36,30 +36,31 @@ class Curriculum(models.Model):
     curriculum_id：课程id
     curriculum_name：课程名
     assortment_id：课程分类id
+    status：课程状态（0 失效，1 生效）
     '''
 
 
 class ClassRelation(models.Model):
     # 班级-自定义班级列表
-    curriculum_id = models.CharField('课程id', max_length=255, unique=True)
-    curriculum_teacher = models.CharField('任课老师', max_length=255, unique=True)
-    curriculum_name = models.CharField('班级名称', max_length=255, unique=True)
-    curriculum_student = models.CharField('上课学生', max_length=255, unique=True)
-    curriculum_time = models.CharField('上课时间', max_length=255, unique=True)
-    curriculum_date = models.CharField('上课日期', max_length=255, unique=True)
-    curriculum_week = models.CharField('上课日期', max_length=255, unique=True)
+    class_id = models.CharField('课程id', max_length=255, unique=True, null=True)
+    class_teacher = models.CharField('任课老师', max_length=255, null=True)
+    class_name = models.CharField('班级名称', max_length=255, null=True)
+    class_student = models.CharField('上课学生', max_length=255, null=True)
+    class_time = models.CharField('上课时间', max_length=255, null=True)
+    class_date = models.CharField('上课日期', max_length=255, null=True)
+    class_week = models.CharField('上课日期', max_length=255, null=True)
 
     def __unicode__(self):
-        return self.curriculum_id, self.curriculum_teacher, \
-               self.curriculum_name, self.curriculum_student, \
-               self.curriculum_time, self.curriculum_date, \
-               self.curriculum_week
+        return self.class_id, self.class_teacher, \
+               self.class_name, self.class_student, \
+               self.class_time, self.class_date, \
+               self.class_week
     '''
-    curriculum_id：课程id
-    curriculum_teacher：任课老师
-    curriculum_name：班级名称
-    curriculum_student：上课学生
-    curriculum_time：上课时间
-    curriculum_date：上课日期
-    curriculum_week：上课日期
+    class_id：课程id
+    class_teacher：任课老师
+    class_name：班级名称
+    class_student：上课学生
+    class_time：上课时间
+    class_date：上课日期
+    class_week：上课日期
     '''
