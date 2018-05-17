@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     # 'django.contrib.staticfiles',
     'apps.role',
-    'apps.curriculum'
+    'apps.curriculum',
+    'apps.class_manager'
 ]
 
 MIDDLEWARE = [

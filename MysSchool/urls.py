@@ -21,6 +21,7 @@ from apps.role.views import update_user_info
 from apps.role.views import get_user_info
 from apps.role.views import user_info
 from apps.curriculum.views import curriculum_add, curriculum_list, curriculum_edit
+from apps.class_manager.views import class_add, class_list, class_edit
 
 
 urlpatterns = [
@@ -34,6 +35,9 @@ urlpatterns = [
     url(r'^curriculum_list/$', curriculum_list.curriculum_list),
     url(r'^assortment_list/$', curriculum_list.assortment_list),
     url(r'^curriculum_edit/$', curriculum_edit.curriculum_edit),
+    url(r'^class_list/$', class_list.class_list),
+    url(r'^class_add/$', class_add.class_add),
+    url(r'^class_edit/$', class_edit.class_edit),
 
     url(r'^admin/', admin.site.urls),
 ]
