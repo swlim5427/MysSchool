@@ -52,13 +52,15 @@ class Teacher(models.Model):
     entry_time = models.DateTimeField('入职日期',  max_length=255, null=True)
     leave_time = models.DateTimeField('离职日期',  max_length=255, null=True)
     name = models.CharField('姓名',  max_length=255, null=True)
+    status = models.CharField('状态',  max_length=255, null=True)
 
     def __unicode__(self):
         return self.wx, self.teach_type, \
                self.age, self.salary, \
                self.school, self.entry_time, \
                self.leave_time, self.user_id, \
-               self.level, self.name
+               self.level, self.name, \
+               self.status
 
     '''
     user_id：用户id
@@ -71,6 +73,7 @@ class Teacher(models.Model):
     leave_time：离职日期
     level：教师级别 （1，2，3，4，5，6，7，8）
     name：姓名
+    status：状态（0 离职，1 在职）
     '''
 
 
@@ -89,6 +92,7 @@ class Student(models.Model):
     leave_time = models.DateTimeField('学完日期',  max_length=255, null=True)
     school = models.CharField('幼儿园/学校',  max_length=255, null=True)
     name = models.CharField('姓名',  max_length=255, null=True)
+    status = models.CharField('状态',  max_length=255, null=True)
 
     def __unicode__(self):
         return self.wx, self.study_type, \
@@ -96,7 +100,7 @@ class Student(models.Model):
                self.periods, self.left_periods, \
                self.entry_time, self.leave_time, \
                self.user_id, self.school, \
-               self.name
+               self.name, self.status
 
     '''
     user_id：用户id
@@ -111,4 +115,5 @@ class Student(models.Model):
     school：幼儿园/学校
     name：姓名
     birthday：生日
+    status：状态（0 未在读，1 在读）
     '''

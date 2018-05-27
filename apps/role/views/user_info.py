@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from apps.role import models as mysql_db
-from pubulic import public_methods
+from public import public_methods
 
 
 @csrf_exempt
