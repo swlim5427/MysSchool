@@ -6,6 +6,7 @@ from public import public_methods
 # from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 @csrf_exempt
@@ -14,14 +15,30 @@ def class_add(request):
     if request.method == 'POST':
         post = request.POST
 
-        curriculum_id = post["curriculumId"]
         class_name = post["className"]
-        teacher_id = post["teacherId"]
-        student_id_list = post["student_id"]
-        class_start_time = post["classStartTime"]
-        class_time = post["classTime"]
-        class_end_time = post["classEndTime"]
-        class_week = post["class_week"]
+        # 课程信息
+        curriculum_info = json.loads(post["curriculumInfo"])
+        curriculum_name = curriculum_info["curriculum_name"]
+        curriculum_id = curriculum_info["curriculum_id"]
+        # 教师信息
+        teacher_info = json.loads(post["teacherInfo"])
+        teacher_name = teacher_info["name"]
+        teacher_id = teacher_info["user_id"]
+
+        # 学生信息
+        student_list = eval(post["studentInfo"])
+        student_name_list = []
+
+        if student_list != "":
+
+            for i in range(len(student_list)):
+                student_name_list.append(student_list[i]["name"])
+
+        class_start_time = post["startTime"]
+        class_time = ""
+        class_end_time = post["endTime"]
+        class_week = post["week"]
+        assortment_type = post["assortmentType"]
 
         try:
             class_id = mysql_db.ClassInfo.objects.order_by('-class_id')[0].class_id
@@ -32,26 +49,39 @@ def class_add(request):
 
         add_class = mysql_db.ClassInfo(
             class_name=class_name,
+            curriculum_name=curriculum_name,
             curriculum_id=curriculum_id,
             class_id=class_id,
-            teacher_id=teacher_id,
+            teacher_name=teacher_name,
             class_start_time=class_start_time,
             class_time=class_time,
             class_end_time=class_end_time,
-            student_id=student_id_list,
+            class_student=json.dumps(student_name_list),
             class_week=class_week,
+            assortment_type=assortment_type,
             status="1"
         )
 
-        for student_id in student_id_list:
+        for i in range(len(student_list)):
 
-            add_class_relation = mysql_db.ClassRelation(
+            add_class_relation_student = mysql_db.ClassRelationStudent(
                 class_id=class_id,
-                teacher_id=teacher_id,
-                student_id=student_id
+                class_name=class_name,
+                user_id=student_list[i]["user_id"],
+                name=student_list[i]["name"],
+                age=student_list[i]["age"],
+                status="1"
             )
+            add_class_relation_student.save()
 
-            add_class_relation.save()
+        add_class_relation_teacher = mysql_db.ClassRelationTeacher(
+            class_id=class_id,
+            class_name=class_name,
+            user_id=teacher_id,
+            name=teacher_name,
+            status="1"
+        )
+        add_class_relation_teacher.save()
 
         try:
             add_class.save()

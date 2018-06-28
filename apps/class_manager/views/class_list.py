@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from apps.curriculum import models as mysql_db
+from apps.class_manager import models as mysql_db
 from public import public_methods
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -13,24 +13,25 @@ import time
 @csrf_exempt
 def class_list(request):
 
-    curriculum_list_j = ""
+    # curriculum_list_j = ""
 
     if request.method == 'POST':
         post = request.POST
 
-        # curriculum_id = post["curriculum_id"]
+        week = post["week"]
+        assortment_type = post["assortmentType"]
+        class_id = []
 
         time.sleep(0.01)
 
-        get_curriculum_list = mysql_db.Curriculum.objects.filter(status="1")
+        get_class_list = mysql_db.ClassInfo.objects.filter(status="1", class_week=week, assortment_type=assortment_type)
+
+        print get_class_list.values("class_student")
 
         try:
-            curriculum = get_curriculum_list.values()[0]
+            check_class_list = get_class_list.values()[0]
 
-            curriculum_list_j = serializers.serialize('json', get_curriculum_list)
-
-            response = curriculum_list_j
-            return HttpResponse(response)
+            class_list_j = serializers.serialize('json', get_class_list)
 
         except:
 
@@ -38,25 +39,9 @@ def class_list(request):
 
             return JsonResponse(response)
 
+        for i in range(len(get_class_list.values())):
 
-@csrf_exempt
-def assortment_list(request):
+            class_id.append(get_class_list.values()[i]["class_id"])
 
-    if request.method == 'POST':
-        post = request.POST
-
-        try:
-            assortment_id = post["assortmentId"]
-            get_assortment_name = mysql_db.Assortment.objects.get(assortment_id=assortment_id)
-            assortment_name = get_assortment_name.assortment_name
-            response = assortment_name
-
-        except:
-
-            get_assortment_list = mysql_db.Assortment.objects.all()
-
-            assortment_list_j = serializers.serialize('json', get_assortment_list)
-
-            response = assortment_list_j
-
+        response = class_list_j.encode('utf-8')
         return HttpResponse(response)

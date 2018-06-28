@@ -22,7 +22,11 @@ def curriculum_list(request):
 
         time.sleep(0.01)
 
-        get_curriculum_list = mysql_db.Curriculum.objects.filter(status="1")
+        try:
+            assortment_id = post["assortmentType"]
+            get_curriculum_list = mysql_db.Curriculum.objects.filter(status="1", assortment_id=assortment_id)
+        except:
+            get_curriculum_list = mysql_db.Curriculum.objects.filter(status="1")
 
         try:
             curriculum = get_curriculum_list.values()[0]

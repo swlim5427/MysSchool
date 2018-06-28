@@ -24,8 +24,8 @@ def user_list(request):
 
         time.sleep(0.01)
 
-        get_teacher_list = mysql_db.Teacher.objects.filter(status="1").values("name", "user_id")
-        get_student_list = mysql_db.Student.objects.filter(status="1").values("name", "user_id")
+        get_teacher_list = mysql_db.Teacher.objects.filter(status="1").values("name", "user_id", "age")
+        get_student_list = mysql_db.Student.objects.filter(status="1").values("name", "user_id", "age")
 
         all_user_list = json.dumps(list(get_teacher_list.union(get_student_list)))
         teacher_list = json.dumps(list(get_teacher_list))
