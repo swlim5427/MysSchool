@@ -52,6 +52,7 @@ def class_add(request):
             curriculum_name=curriculum_name,
             curriculum_id=curriculum_id,
             class_id=class_id,
+            teacher_id=teacher_id,
             teacher_name=teacher_name,
             class_start_time=class_start_time,
             class_time=class_time,
@@ -70,6 +71,8 @@ def class_add(request):
                 user_id=student_list[i]["user_id"],
                 name=student_list[i]["name"],
                 age=student_list[i]["age"],
+                periods=student_list[i]["periods"],
+                left_periods=student_list[i]["left_periods"],
                 status="1"
             )
             add_class_relation_student.save()

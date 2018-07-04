@@ -11,6 +11,7 @@ class ClassInfo(models.Model):
     class_id = models.CharField('班级id', max_length=255, unique=True, null=True)
     curriculum_name = models.CharField('课程名', max_length=255, null=True)
     curriculum_id = models.CharField('课程id', max_length=255, null=True)
+    teacher_id = models.CharField('任课老师id', max_length=255, null=True)
     teacher_name = models.CharField('任课老师', max_length=255, null=True)
     class_name = models.CharField('班级名称', max_length=255, null=True)
     class_student = models.CharField('上课学生', max_length=255, null=True)
@@ -33,6 +34,7 @@ class ClassInfo(models.Model):
     class_id：班级id
     curriculum_name：课程名
     curriculum_id：课程名
+    teacher_id：任课老师id
     teacher_name：任课老师
     class_name：班级名称
     class_student：上课学生(列表)
@@ -76,11 +78,14 @@ class ClassRelationStudent(models.Model):
     name = models.CharField('学生姓名', max_length=255, null=True)
     status = models.CharField('状态', max_length=255, null=True)
     age = models.CharField('年龄', max_length=255, null=True)
+    periods = models.CharField('课时', max_length=255, null=True)
+    left_periods = models.CharField('剩余课时', max_length=255, null=True)
 
     def __unicode__(self):
         return self.class_id, self.student_id, \
                self.class_name, self.student_name, \
-               self.status, self.age
+               self.status, self.age, \
+               self.periods, self.left_periods
 
     '''
     class_id：课程id
@@ -88,4 +93,6 @@ class ClassRelationStudent(models.Model):
     student_id：任课老师id
     student_name：任课老师姓名
     status：学生状态（0 未在学，1 在学）
+    periods：总课时
+    left_periods：剩余课时
     '''

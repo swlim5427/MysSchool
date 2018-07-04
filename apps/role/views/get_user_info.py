@@ -42,8 +42,9 @@ def get_user_info(request):
     context = {'a': "123", "b": "456", "c": "789", "d": "4321"}
     # context['a'] = '1'
 
-    return render(request, 'main.html', context)
+    # return render(request, 'main.html', context)
 
+    return render(request, 'index.html', context)
 # def getNode(request):
 #
 #     res = []

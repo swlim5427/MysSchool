@@ -12,7 +12,7 @@ import json
 
 
 @csrf_exempt
-def class_edit(request):
+def class_eliminate(request):
 
     if request.method == 'POST':
         post = request.POST
@@ -20,14 +20,14 @@ def class_edit(request):
 
         if post["messageType"] == "init":
 
-            class_info = mysql_db.ClassInfo.objects.filter(class_id=class_id, status=1).values(
-                    "class_name", "class_start_time", "class_end_time", "curriculum_id", "curriculum_name")
+            # class_info = mysql_db.ClassInfo.objects.filter(class_id=class_id, status=1).values(
+            #         "class_name", "class_start_time", "class_end_time", "curriculum_id", "curriculum_name")
 
             teacher_info = mysql_db.ClassRelationTeacher.objects.filter(class_id=class_id, status=1).values(
                     "user_id", "name")
 
             student_list_info = mysql_db.ClassRelationStudent.objects.filter(class_id=class_id, status=1).values(
-                    "user_id", "name", "age", "periods", "left_periods")
+                    "user_id", "name", "age")
 
             teacher_info = json.dumps(teacher_info[0])
             class_info = json.dumps(class_info[0])
@@ -49,7 +49,7 @@ def class_edit(request):
                     ~Q(user_id=select_student_list[3]["user_id"]),
                     ~Q(user_id=select_student_list[4]["user_id"]),
                     ~Q(user_id=select_student_list[5]["user_id"])
-            ).filter(status=1).values("user_id", "name", "age", "periods", "left_periods")
+            ).filter(status=1).values("user_id", "name", "age")
 
             for i in range(len(select_student_list)):
                 try:
@@ -110,7 +110,7 @@ def class_edit(request):
             update_class_relation_teacher.class_name = class_name
             update_class_relation_teacher.user_id = teacher_id
             update_class_relation_teacher.name = teacher_name
-            # 需要改造成 json
+
             mysql_db.ClassRelationStudent.objects.filter(class_id=class_id).delete()
 
             try:
@@ -125,8 +125,6 @@ def class_edit(request):
                         user_id=student_list[i]["user_id"],
                         name=student_list[i]["name"],
                         age=student_list[i]["age"],
-                        periods=student_list[i]["periods"],
-                        left_periods=student_list[i]["left_periods"],
                         status="1"
                     )
                     add_class_relation_student.save()

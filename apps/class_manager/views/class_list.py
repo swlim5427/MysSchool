@@ -24,7 +24,23 @@ def class_list(request):
 
         time.sleep(0.01)
 
-        get_class_list = mysql_db.ClassInfo.objects.filter(status="1", class_week=week, assortment_type=assortment_type)
+        try:
+            teacher_id = post["teacherId"]
+
+            get_class_list = mysql_db.ClassInfo.objects.filter(
+                    status="1",
+                    class_week=week,
+                    assortment_type=assortment_type,
+                    teacher_id=teacher_id
+            )
+
+        except Exception as e:
+            print e
+            get_class_list = mysql_db.ClassInfo.objects.filter(
+                    status="1",
+                    class_week=week,
+                    assortment_type=assortment_type
+            )
 
         print get_class_list.values("class_student")
 
