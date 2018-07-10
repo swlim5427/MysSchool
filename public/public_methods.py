@@ -47,6 +47,23 @@ def get_date_time(file_name, now_time):
         return date_time
 
 
+def week(init):
+    if init == "0":
+        return u"星期日"
+    elif init == "1":
+        return u"星期一"
+    elif init == "2":
+        return u"星期二"
+    elif init == "3":
+        return u"星期三"
+    elif init == "4":
+        return u"星期四"
+    elif init == u"5":
+        return u"星期五"
+    elif init == "6":
+        return u"星期六"
+
+
 def response_message(result, message, code):
 
     http_response ={"result": result, "responseMessage": message, "code": code}

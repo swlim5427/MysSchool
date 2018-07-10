@@ -7,8 +7,9 @@ from public import public_methods
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Q
 import json
+import time
+import datetime
 
 
 @csrf_exempt
@@ -20,123 +21,87 @@ def class_eliminate(request):
 
         if post["messageType"] == "init":
 
-            # class_info = mysql_db.ClassInfo.objects.filter(class_id=class_id, status=1).values(
-            #         "class_name", "class_start_time", "class_end_time", "curriculum_id", "curriculum_name")
-
-            teacher_info = mysql_db.ClassRelationTeacher.objects.filter(class_id=class_id, status=1).values(
-                    "user_id", "name")
-
             student_list_info = mysql_db.ClassRelationStudent.objects.filter(class_id=class_id, status=1).values(
                     "user_id", "name", "age")
+            student_info = []
 
-            teacher_info = json.dumps(teacher_info[0])
-            class_info = json.dumps(class_info[0])
+            for i in range(len(student_list_info)):
 
-            select_student_list = []
+                student_id = student_list_info[i]["user_id"]
+                student_name = student_list_info[i]["name"]
+                left_period = role_db.Student.objects.filter(user_id=student_id).values("left_periods")
 
-            for i in range(6):
-                try:
-                    select_student = student_list_info[i]
-                except:
-                    select_student = {"user_id": "1"}
+                student_info.append({
+                    "userId": student_id,
+                    "name": student_name,
+                    "leftPeriod": left_period[0]["left_periods"]
+                })
 
-                select_student_list.append(select_student)
-
-            left_student_list = role_db.Student.objects.filter(
-                    ~Q(user_id=select_student_list[0]["user_id"]),
-                    ~Q(user_id=select_student_list[1]["user_id"]),
-                    ~Q(user_id=select_student_list[2]["user_id"]),
-                    ~Q(user_id=select_student_list[3]["user_id"]),
-                    ~Q(user_id=select_student_list[4]["user_id"]),
-                    ~Q(user_id=select_student_list[5]["user_id"])
-            ).filter(status=1).values("user_id", "name", "age")
-
-            for i in range(len(select_student_list)):
-                try:
-                    select_student_list[i]["name"]
-                except:
-                    del select_student_list[i:]
-
-            response = {"classInfo": class_info,
-                        "teacherInfo": teacher_info,
-                        "selectStudentList": json.dumps(list(select_student_list)),
-                        "lefStudentList": json.dumps(list(left_student_list))
-                        }
+            response = {"studentInfo": student_info}
 
             return JsonResponse(response)
 
-        if post["messageType"] == "edit":
+        if post["messageType"] == "commit":
 
-            print class_id
+            print post
+            print post["studentLeftPeriod"]
+            print post["classInfo"]
 
-            class_name = post["className"]
-            # 课程信息
-            curriculum_info = json.loads(post["curriculumInfo"])
-            curriculum_name = curriculum_info["curriculum_name"]
-            curriculum_id = curriculum_info["curriculum_id"]
-            # 教师信息
-            teacher_info = json.loads(post["teacherInfo"])
-            teacher_name = teacher_info["name"]
-            teacher_id = teacher_info["user_id"]
+            for i in range(len(eval(post["studentLeftPeriod"]))):
 
-            # 学生信息
-            student_list = eval(post["studentInfo"])
+                if eval(post["studentLeftPeriod"])[i]["leftPeriod"] == "0":
+                    response = {"message": "消课失败", "user": eval(post["studentLeftPeriod"])[i]["name"]}
+                    result = "false"
+                    result_code = "0"
+
+                    return JsonResponse(public_methods.response_message(result, response, result_code))
+
+            student_list = eval(post["studentLeftPeriod"])
+            class_id = eval(post["classInfo"])["class_id"]
+            class_name = eval(post["classInfo"])["class_name"]
+            teacher_id = eval(post["classInfo"])["teacher_id"]
+            teacher_name = eval(post["classInfo"])["teacher_name"]
+            status = 1
+            period_time = int(time.time())
+            period_data = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            class_time = eval(post["classInfo"])["class_start_time"] + " - " + eval(post["classInfo"])["class_end_time"]
+            class_week = public_methods.week(eval(post["classInfo"])["class_week"])
+            class_time_info = class_week + "：" + class_time
             student_name_list = []
 
-            if student_list != "":
+            for i in range(len(student_list)):
+                student_name_list.append(student_list[i]["name"])
+                class_period_student_add = mysql_db.ClassPeriodStudent(
+                    class_id=class_id,
+                    class_name=class_name,
+                    user_id=student_list[i]["userId"],
+                    name=student_list[i]["name"],
+                    status=1,
+                    period_time=period_time,
+                    period_data=period_data,
+                    class_time=class_time_info,
+                    class_teacher=teacher_name
+                )
+                class_period_student_add.save()
+                update_student_period = role_db.Student.objects.get(user_id=student_list[i]["userId"])
+                update_student_period.left_periods = int(update_student_period.left_periods) - 1
+                update_student_period.save()
 
-                for i in range(len(student_list)):
-                    student_name_list.append(student_list[i]["name"])
+            class_period_teacher_add = mysql_db.ClassPeriodTeacher(
+                class_id=class_id,
+                class_name=class_name,
+                user_id=teacher_id,
+                name=teacher_name,
+                status=status,
+                period_data=period_data,
+                period_time=period_time,
+                class_time=class_time_info,
+                class_student=student_name_list
+            )
+            class_period_teacher_add.save()
 
-            class_start_time = post["startTime"]
-            class_time = ""
-            class_end_time = post["endTime"]
-            # class_week = post["week"]
-            # assortment_type = post["assortmentType"]
-
-            update_class = mysql_db.ClassInfo.objects.get(class_id=class_id)
-
-            update_class.class_name = class_name
-            update_class.curriculum_name = curriculum_name
-            update_class.curriculum_id = curriculum_id
-            update_class.teacher_id = teacher_id
-            update_class.teacher_name = teacher_name
-            update_class.class_start_time = class_start_time
-            update_class.class_time = class_time
-            update_class.class_end_time = class_end_time
-            update_class.class_student = json.dumps(student_name_list)
-
-            update_class_relation_teacher = mysql_db.ClassRelationTeacher.objects.get(class_id=class_id)
-            update_class_relation_teacher.class_name = class_name
-            update_class_relation_teacher.user_id = teacher_id
-            update_class_relation_teacher.name = teacher_name
-
-            mysql_db.ClassRelationStudent.objects.filter(class_id=class_id).delete()
-
-            try:
-                update_class_relation_teacher.save()
-                update_class.save()
-
-                for i in range(len(student_list)):
-
-                    add_class_relation_student = mysql_db.ClassRelationStudent(
-                        class_id=class_id,
-                        class_name=class_name,
-                        user_id=student_list[i]["user_id"],
-                        name=student_list[i]["name"],
-                        age=student_list[i]["age"],
-                        status="1"
-                    )
-                    add_class_relation_student.save()
-
-                response = {"message": "班级更新成功", "class_id": class_id}
-                result = "success"
-                result_code = "1"
-
-            except Exception as e:
-                print e
-                response = {"message": "班级更新失败", "class_id": class_id}
-                result = "false"
-                result_code = "0"
+            response = {"message": "成功"}
+            result = "success"
+            result_code = "1"
 
             return JsonResponse(public_methods.response_message(result, response, result_code))

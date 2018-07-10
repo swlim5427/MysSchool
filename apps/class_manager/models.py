@@ -65,7 +65,7 @@ class ClassRelationTeacher(models.Model):
     class_id：课程id
     class_name：班级名称
     teacher_id：任课老师id
-    teacher_name：任课老师姓名
+    name：任课老师姓名
     status：教师状态（0 离职，1 在职）
     '''
 
@@ -95,4 +95,69 @@ class ClassRelationStudent(models.Model):
     status：学生状态（0 未在学，1 在学）
     periods：总课时
     left_periods：剩余课时
+    '''
+
+
+class ClassPeriodTeacher(models.Model):
+    # 教师-课时
+    class_id = models.CharField('班级id', max_length=255, null=True)
+    class_name = models.CharField('班级名称', max_length=255, null=True)
+    user_id = models.CharField('任课老师id', max_length=255, null=True)
+    name = models.CharField('任课老师姓名', max_length=255, null=True)
+    status = models.CharField('状态', max_length=255, null=True)
+    period_time = models.CharField('消课时间戳', max_length=255, null=True)
+    period_data = models.CharField('消课时间', max_length=255, null=True)
+    class_time = models.CharField('上课时间', max_length=255, null=True)
+    class_student = models.CharField('上课学生', max_length=255, null=True)
+
+    def __unicode__(self):
+        return self.user_id, self.name, \
+               self.status, self.period_time, \
+               self.period_data, self.class_id, \
+               self.class_name, self.class_time, \
+               self.class_student
+
+    '''
+    class_id：班级id
+    class_name：班级名称
+    user_id：任课老师id
+    name：任课老师姓名
+    status：教师状态（0 离职，1 在职）
+    period_time：消课时间戳
+    period_data：消课时间
+    class_time：上课时间
+    class_student：上课学生
+
+    '''
+
+
+class ClassPeriodStudent(models.Model):
+    # 学生-课时
+    class_id = models.CharField('班级id', max_length=255, null=True)
+    class_name = models.CharField('班级名称', max_length=255, null=True)
+    user_id = models.CharField('学生id', max_length=255, null=True)
+    name = models.CharField('学生姓名', max_length=255, null=True)
+    status = models.CharField('状态', max_length=255, null=True)
+    period_time = models.CharField('消课时间戳', max_length=255, null=True)
+    period_data = models.CharField('消课时间', max_length=255, null=True)
+    class_time = models.CharField('上课时间', max_length=255, null=True)
+    class_teacher = models.CharField('上课老师', max_length=255, null=True)
+
+    def __unicode__(self):
+        return self.user_id, self.name, \
+               self.status, self.period_time, \
+               self.period_data, self.class_time, \
+               self.class_id, self.class_name, \
+               self.class_teacher
+
+    '''
+    class_id：班级id
+    class_name：班级名称
+    user_id：学生id
+    name：学生姓名
+    status：学生状态（0 未在读，1 在读）
+    period_time：消课时间戳
+    period_data：消课时间
+    class_time：上课时间
+    class_teacher：上课老师
     '''
