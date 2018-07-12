@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>html5带步骤的问卷表单提交</title>
+
+<link rel="stylesheet" type="text/css" href="/static/css/normalize.css" />
+{#<link rel="stylesheet" type="text/css" href="/static/css/demo.css" />#}
+
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="/static/css/component.css" />
+
+<script src="/static/js/modernizr.custom.js"></script>
+
+</head>
+<body>
+<section>
+	<form id="theForm" class="simform" autocomplete="off">
+		<div class="simform-inner">
+			<ol class="questions">
+				<li>
+					<span><label for="q1">你最喜欢的电影是什么?</label></span>
+					<input id="q1" name="q1" type="text"/>
+				</li>
+				<li>
+					<span><label for="q2">你住在哪里？</label></span>
+					<input id="q2" name="q2" type="text"/>
+				</li>
+				<li>
+					<span><label for="q3">你什么时候开始工作?</label></span>
+					<input id="q3" name="q3" type="text"/>
+				</li>
+				<li>
+					<span><label for="q4">你喜欢你的蔬菜吗?</label></span>
+					<input id="q4" name="q4" type="text"/>
+				</li>
+				<li>
+					<span><label for="q5">激励你的什么书?</label></span>
+					<input id="q5" name="q5" type="text"/>
+				</li>
+				<li>
+					<span><label for="q6">你的职业是什么?</label></span>
+					<input id="q6" name="q6" type="text"/>
+				</li>
+			</ol><!-- /questions -->
+			<button class="submit" type="submit">发送答案</button>
+			<div class="controls">
+				<button class="next"></button>
+				<div class="progress"></div>
+				<span class="number">
+					<span class="number-current"></span>
+					<span class="number-total"></span>
+				</span>
+				<span class="error-message"></span>
+			</div><!-- / controls -->
+		</div><!-- /simform-inner -->
+		<span class="final-message"></span>
+	</form><!-- /simform -->			
+</section>
+
+<script type="text/javascript" src="/static/js/classie.js"></script>
+<script type="text/javascript" src="/static/js/stepsForm.js"></script>
+<script type="text/javascript">
+var theForm = document.getElementById( 'theForm' );
+
+new stepsForm( theForm, {
+	onSubmit : function( form ) {
+		// hide form
+		classie.addClass( theForm.querySelector( '.simform-inner' ), 'hide' );
+
+		/*
+		form.submit()
+		or
+		AJAX request (maybe show loading indicator while we don't have an answer..)
+		*/
+
+		// let's just simulate something...
+		var messageEl = theForm.querySelector( '.final-message' );
+		messageEl.innerHTML = '谢谢你们！我们会联系你的。';
+		classie.addClass( messageEl, 'show' );
+	}
+} );
+</script>
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+</div>
+</body>
+</html>
