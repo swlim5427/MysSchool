@@ -15,6 +15,11 @@ def user_check(param):
         return 0
 
 
+def mkt_time(t):
+    time_array = time.strptime(t, "%Y-%m-%d")
+    return int(time.mktime(time_array))
+
+
 def get_date_time(file_name, now_time):
 
     date_time = datetime.datetime.now()

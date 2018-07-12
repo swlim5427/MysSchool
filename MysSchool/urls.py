@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from apps.role.views import regist, login, update_user_info, get_user_info, user_info, user_list
 from apps.curriculum.views import curriculum_add, curriculum_list, curriculum_edit
-from apps.class_manager.views import class_add, class_list, class_edit, class_eliminate
+from apps.class_manager.views import class_add, class_list, class_edit, class_eliminate, period_statistics
 
 
 urlpatterns = [
@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^class_add/$', class_add.class_add),
     url(r'^class_edit/$', class_edit.class_edit),
     url(r'^class_eliminate/$', class_eliminate.class_eliminate),
+    url(r'^period_statistics/$', period_statistics.period_statistics),
     url(r'^user_list/$', user_list.user_list),
 
     url(r'^admin/', admin.site.urls),
