@@ -37,19 +37,37 @@ from django.http.response import JsonResponse
 # inventory_path = "../playbooks/IDC-group/EagleFinancial"
 
 
+# def get_user_info(request):
+#
+#     context = {'a': "123", "b": "456", "c": "789", "d": "4321"}
+#     # context['a'] = '1'
+#
+#     # return render(request, 'main.html', context)
+#
+#     return render(request, 'index.html', context)
+# # def getNode(request):
+# #
+# #     res = []
+# #
+# #     for dir_name in os.listdir(inventory_path):
+# #         res.append(dir_name)
+# #
+# #     return JsonResponse(res)
+# from django.shortcuts import render
+
 def get_user_info(request):
 
-    context = {'a': "123", "b": "456", "c": "789", "d": "4321"}
-    # context['a'] = '1'
+    # project_file = open("D:\project\workspace\deployment\playbooks\conf\upstream_info.txt","r")
 
-    # return render(request, 'main.html', context)
+    node = [1, 2, 3, 4, 5, 6]
 
-    return render(request, 'index.html', context)
-# def getNode(request):
-#
-#     res = []
-#
-#     for dir_name in os.listdir(inventory_path):
-#         res.append(dir_name)
-#
-#     return JsonResponse(res)
+
+    # for proj in project_file:
+    #     proj = proj.split('\n')[0]
+    #     node.append(proj)
+
+    directory = {}
+
+    directory.setdefault('proj', node)
+
+    return render(request, 'index.html', directory)

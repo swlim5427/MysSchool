@@ -17,9 +17,7 @@ def user_list(request):
     if request.method == 'POST':
 
         post = request.POST
-    # if request.method == 'GET':
-    #
-    #     post = request.GET
+
         user_type = post["userType"]
 
         time.sleep(0.01)
@@ -48,5 +46,3 @@ def user_list(request):
                         }
 
             return JsonResponse(response)
-
-            # return HttpResponse(all_user_list)
