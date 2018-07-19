@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from apps.role.views import regist, login, update_user_info, get_user_info, user_info, user_list, student_add
-from apps.role.views import student_list
+from apps.role.views import student_list, student_edit
 from apps.curriculum.views import curriculum_add, curriculum_list, curriculum_edit
 from apps.class_manager.views import class_add, class_list, class_edit, class_eliminate, period_statistics
 
@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^user_list/$', user_list.user_list),
     url(r'^student_add/$', student_add.student_add),
     url(r'^student_list/$', student_list.student_list),
+    url(r'^student_edit/$', student_edit.student_edit),
 
     url(r'^admin/', admin.site.urls),
 ]
