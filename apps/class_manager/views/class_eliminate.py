@@ -10,6 +10,9 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import time
 import datetime
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 
 @csrf_exempt
