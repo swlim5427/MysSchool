@@ -22,10 +22,10 @@ def user_list(request):
 
         time.sleep(0.01)
 
-        get_teacher_list = mysql_db.Teacher.objects.filter(status="1").values(
+        get_teacher_list = mysql_db.Teacher.objects.filter(status="1").filter(teach_type="1").values(
                 "name", "user_id", "age")
-        get_student_list = mysql_db.Student.objects.filter(status="1").values(
-                "name", "user_id", "age", "periods", "left_periods")
+        get_student_list = mysql_db.Student.objects.filter(status="1").filter(left_periods__gt=0).values(
+                "name", "user_id", "age", "periods", "left_periods", "contract_id").order_by("contract_id")
 
         # all_user_list = json.dumps(list(get_teacher_list.union(get_student_list)))
         teacher_list = json.dumps(list(get_teacher_list))

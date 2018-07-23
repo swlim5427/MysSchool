@@ -23,6 +23,8 @@ def student_add(request):
             user_id = "20000001"
 
         user_type = 2
+
+        contract_id = post["contractId"]
         name = post["studentName"]
         phone = post["studentPhone"]
         creat_time = now_time
@@ -59,7 +61,8 @@ def student_add(request):
                 school=school,
                 name=name,
                 user_id=user_id,
-                status=status
+                status=status,
+                contract_id=contract_id
         )
 
         try:

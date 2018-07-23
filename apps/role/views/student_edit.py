@@ -25,7 +25,7 @@ def student_edit(request):
             person_search = mysql_db.Person.objects.filter(user_id=student_id).values(
                     "phone", "sex")
             student_search = mysql_db.Student.objects.filter(user_id=student_id).values(
-                    "age", "price", "periods", "school", "name")
+                    "age", "price", "periods", "school", "name", "contract_id")
 
             person_info = json.dumps(list(person_search)[0])
 
@@ -47,6 +47,7 @@ def student_edit(request):
             # periods = post["studentPeriods"]
             # left_periods = post["studentPeriods"]
             school = post["studentSchool"]
+            contract_id = post["contractId"]
 
             update_persion = mysql_db.Person.objects.get(user_id=user_id)
             update_persion.phone = phone
@@ -59,6 +60,7 @@ def student_edit(request):
             update_student.price = price
             # update_student.periods = periods
             update_student.school = school
+            update_student.contract_id = contract_id
 
             try:
                 update_persion.save()

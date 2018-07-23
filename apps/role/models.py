@@ -93,6 +93,7 @@ class Student(models.Model):
     school = models.CharField('幼儿园/学校',  max_length=255, null=True)
     name = models.CharField('姓名',  max_length=255, null=True)
     status = models.CharField('状态',  max_length=255, null=True)
+    contract_id = models.CharField('合同编号',  max_length=255, null=True)
 
     def __unicode__(self):
         return self.wx, self.study_type, \
@@ -100,7 +101,8 @@ class Student(models.Model):
                self.periods, self.left_periods, \
                self.entry_time, self.leave_time, \
                self.user_id, self.school, \
-               self.name, self.status
+               self.name, self.status, \
+               self.contract_id
 
     '''
     user_id：用户id
@@ -116,4 +118,5 @@ class Student(models.Model):
     name：姓名
     birthday：生日
     status：状态（0 未在读，1 在读）
+    contract_id：合同编号
     '''
