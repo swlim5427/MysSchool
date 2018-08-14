@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
 from apps.role import models as mysql_db
 from public import public_methods
 
@@ -77,27 +75,3 @@ def user_info(request):
         response_message = {"message": message}
         response = public_methods.response_message("success", response_message, "100001")
         return JsonResponse(response)
-
-
-
-        # get_user_info((user_id, user_type))
-
-
-# def get_user_info(message):
-#
-#     user_id = message[0]
-#     user_type = message[1]
-#
-#     if user_type == "0" or user_type == "1":
-#
-#         get_user = mysql_db.Person.objects.get(user_id=user_id)
-#         user_id1 = get_user.user_id
-#         get_teacher = mysql_db.Teacher.objects.get(user_id=user_id)
-#
-#         user_type1 = get_teacher.teach_type
-#
-#         response_message = {"message": "登陆成功", "userId": user_id, "userType": user_type}
-#
-#         response = public_methods.response_message("success", response_message, "100001")
-#
-#         return JsonResponse(response)

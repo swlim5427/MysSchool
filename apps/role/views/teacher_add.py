@@ -10,35 +10,34 @@ import time
 
 
 @csrf_exempt
-def student_add(request):
+def teacher_add(request):
     now_time = int(time.time())
     if request.method == 'POST':
         post = request.POST
 
         try:
-            l_user_id = mysql_db.Student.objects.order_by('-user_id')[0].user_id
+            l_user_id = mysql_db.Teacher.objects.order_by('-user_id')[0].user_id
             user_id = int(l_user_id) + 1
 
         except:
-            user_id = "20000001"
+            user_id = "10000001"
 
-        user_type = 2
+        user_type = 1
 
-        contract_id = post["contractId"]
-        name = post["studentName"]
-        phone = post["studentPhone"]
+        name = post["teacherName"]
+        phone = post["teacherPhone"]
         create_time = now_time
-        sex = post["studentSex"]
-        age = post["studentAge"]
-        price = post["studentPrice"]
-        periods = post["studentPeriods"]
-        left_periods = post["studentPeriods"]
-        school = post["studentSchool"]
+        sex = post["teacherSex"]
+        # age = post["teacherAge"]
+        age = 100
+        salary = post["teacherSalary"]
+        school = post["teacherSchool"]
         entry_time = now_time
         status = 1
-        user_name = user_id
-        pass_word = user_id
-        study_type = 210003
+        user_name = phone
+        pass_word = 123456
+        teach_type = 1
+        level = post["teacherLevel"]
 
         insert_person = mysql_db.Person(
                 user_id=user_id,
@@ -51,23 +50,21 @@ def student_add(request):
                 user_name=user_name
         )
 
-        insert_student = mysql_db.Student(
-                study_type=study_type,
+        insert_teacher = mysql_db.Teacher(
+                teach_type=teach_type,
                 age=age,
-                price=price,
-                periods=periods,
-                left_periods=left_periods,
+                salary=salary,
                 entry_time=entry_time,
                 school=school,
                 name=name,
                 user_id=user_id,
                 status=status,
-                contract_id=contract_id
+                level=level
         )
 
         try:
             insert_person.save()
-            insert_student.save()
+            insert_teacher.save()
             response = {"message": "成功"}
             result = "success"
             result_code = "1"
@@ -77,10 +74,5 @@ def student_add(request):
             response = {"message": "失败"}
             result = "false"
             result_code = "0"
-        # insert_person.save()
-        # insert_student.save()
-        # response = {"message": "成功"}
-        # result = "success"
-        # result_code = "1"
 
         return JsonResponse(public_methods.response_message(result, response, result_code))

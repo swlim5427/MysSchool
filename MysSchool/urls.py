@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from apps.role.views import regist, login, update_user_info, get_user_info, user_info, user_list, student_add
-from apps.role.views import student_list, student_edit
+from apps.role.views import student_list, student_edit, teacher_list, teacher_add
 from apps.curriculum.views import curriculum_add, curriculum_list, curriculum_edit
 from apps.class_manager.views import class_add, class_list, class_edit, class_eliminate, period_statistics
+from apps.class_manager.views import teacher_class_eliminate, period_statistics_teacher
 
 
 urlpatterns = [
@@ -41,6 +42,11 @@ urlpatterns = [
     url(r'^student_add/$', student_add.student_add),
     url(r'^student_list/$', student_list.student_list),
     url(r'^student_edit/$', student_edit.student_edit),
+    url(r'^teacher_list/$', teacher_list.teacher_list),
+    url(r'^teacher_add/$', teacher_add.teacher_add),
+    url(r'^teacher_class_eliminate/$', teacher_class_eliminate.teacher_class_eliminate),
+    url(r'^period_statistics_teacher/$', period_statistics_teacher.period_statistics_teacher),
+
 
     url(r'^admin/', admin.site.urls),
 ]

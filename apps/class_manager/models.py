@@ -161,3 +161,35 @@ class ClassPeriodStudent(models.Model):
     class_time：上课时间
     class_teacher：上课老师
     '''
+
+
+class ClassPeriodTeacherSelf(models.Model):
+    class_id = models.CharField('班级id', max_length=255, null=True)
+    class_name = models.CharField('班级名称', max_length=255, null=True)
+    user_id = models.CharField('老师id', max_length=255, null=True)
+    name = models.CharField('老师姓名', max_length=255, null=True)
+    status = models.CharField('状态', max_length=255, null=True)
+    class_time = models.CharField('上课时间', max_length=255, null=True)
+    class_student = models.CharField('上课学生', max_length=255, null=True)
+    period_time = models.CharField('消课时间戳', max_length=255, null=True)
+    period_data = models.CharField('消课时间', max_length=255, null=True)
+
+    def __unicode__(self):
+        return self.class_id, self.class_name, \
+               self.user_id, self.name, \
+               self.status, self.class_time, \
+               self.class_student, self.period_time, \
+               self.period_data
+
+    '''
+    class_id：班级id
+    class_name：班级名称
+    user_id：老师id
+    name：老师姓名
+    status：状态（0 未确认，1 确认， 2 拒绝）
+    class_time：上课时间
+    class_student：上课学生
+    period_time = models.CharField('消课时间戳', max_length=255, null=True)
+    period_data = models.CharField('消课时间', max_length=255, null=True)
+
+    '''
