@@ -19,7 +19,8 @@ from apps.role.views import regist, login, update_user_info, get_user_info, user
 from apps.role.views import student_list, student_edit, teacher_list, teacher_add
 from apps.curriculum.views import curriculum_add, curriculum_list, curriculum_edit
 from apps.class_manager.views import class_add, class_list, class_edit, class_eliminate, period_statistics
-from apps.class_manager.views import teacher_class_eliminate, period_statistics_teacher
+from apps.class_manager.views import teacher_class_eliminate, period_statistics_teacher, period_teacher_self
+from apps.class_manager.views import commit_period
 
 
 urlpatterns = [
@@ -46,6 +47,8 @@ urlpatterns = [
     url(r'^teacher_add/$', teacher_add.teacher_add),
     url(r'^teacher_class_eliminate/$', teacher_class_eliminate.teacher_class_eliminate),
     url(r'^period_statistics_teacher/$', period_statistics_teacher.period_statistics_teacher),
+    url(r'^period_teacher_self/$', period_teacher_self.period_teacher_self),
+    url(r'^commit_period/$', commit_period.commit_period),
 
 
     url(r'^admin/', admin.site.urls),

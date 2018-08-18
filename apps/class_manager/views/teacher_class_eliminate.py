@@ -81,12 +81,16 @@ def teacher_class_eliminate(request):
                 class_time=class_time_info,
                 period_time=period_time,
                 period_data=period_data,
-                class_student=student_name_list
+                class_student=json.dumps(student_name_list),
             )
             class_period_teacher_self_add.save()
 
             response = {"message": "成功"}
             result = "success"
             result_code = "1"
+
+            teacher_table_update = role_db.Teacher.objects.get(user_id=teacher_id)
+            teacher_table_update.left_commit_periods = int(teacher_table_update.left_commit_periods) + 1
+            teacher_table_update.save()
 
             return JsonResponse(public_methods.response_message(result, response, result_code))

@@ -12,7 +12,7 @@ import json
 
 
 @csrf_exempt
-def period_statistics_teacher(request):
+def period_teacher_self(request):
 
     if request.method == 'POST':
 
@@ -20,7 +20,7 @@ def period_statistics_teacher(request):
 
         teacher_id = post["teacherId"]
 
-        if post["messageType"] == "list":
+        if post["messageType"] == "teacherList":
 
             if post["month"] == "13":
 
@@ -36,20 +36,36 @@ def period_statistics_teacher(request):
                 else:
                     m_e = public_methods.mkt_time(post["year"] + "-" + str(int(post["month"])+1) + "-" + "1")
 
-            period_count = mysql_db.ClassPeriodTeacher.objects.filter(
+            period_count = mysql_db.ClassPeriodTeacherSelf.objects.filter(
                     period_time__gt=m_s, period_time__lt=m_e
             ).filter(
                     user_id=teacher_id
+            ).filter(
+                    status=0
             ).values(
                     'user_id', "name"
             ).annotate(
                     periodCount=Count('user_id')
             ).order_by(
-                    "status", "user_id"
+                    "id"
             )
 
             print period_count.query
 
             teacher_list = json.dumps(list(period_count))
+
+            return HttpResponse(teacher_list)
+
+        if post["messageType"] == "commitList":
+
+            period_commit_list = mysql_db.ClassPeriodTeacherSelf.objects.filter(
+                    user_id=teacher_id
+            ).filter(
+                    status=0
+            ).values().all()
+
+            print period_commit_list.query
+
+            teacher_list = json.dumps(list(period_commit_list))
 
             return HttpResponse(teacher_list)

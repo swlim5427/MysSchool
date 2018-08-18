@@ -59,7 +59,8 @@ def teacher_add(request):
                 name=name,
                 user_id=user_id,
                 status=status,
-                level=level
+                level=level,
+                left_commit_periods=0
         )
 
         try:

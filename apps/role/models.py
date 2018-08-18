@@ -53,6 +53,7 @@ class Teacher(models.Model):
     leave_time = models.CharField('离职日期',  max_length=255, null=True)
     name = models.CharField('姓名',  max_length=255, null=True)
     status = models.CharField('状态',  max_length=255, null=True)
+    left_commit_periods = models.CharField('剩余待确认课时',  max_length=255, null=True)
 
     def __unicode__(self):
         return self.wx, self.teach_type, \
@@ -74,6 +75,7 @@ class Teacher(models.Model):
     level：教师级别 （1，2，3，4，5，6，7，8）
     name：姓名
     status：状态（0 离职，1 在职）
+    left_commit_periods：剩余待确认课时
     '''
 
 

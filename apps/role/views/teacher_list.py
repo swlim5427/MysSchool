@@ -16,7 +16,8 @@ def teacher_list(request):
 
         post = request.POST
 
-        get_teacher_list = mysql_db.Teacher.objects.filter(status=1).filter(teach_type=1).values('name', 'user_id')
+        get_teacher_list = mysql_db.Teacher.objects.filter(status=1).filter(teach_type=1).values(
+                'name', 'user_id', 'left_commit_periods')
 
         teacher_list_r = json.dumps(list(get_teacher_list))
         return HttpResponse(teacher_list_r)
