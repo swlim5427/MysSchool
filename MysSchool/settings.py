@@ -75,26 +75,26 @@ WSGI_APPLICATION = 'MysSchool.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'mys_school',
-#         'USER': 'root',
-#         'PASSWORD': 'MysSchool@2018',
-#         'HOST': '139.199.127.192',
-#         'PORT': '3306',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'mys_school',
         'USER': 'root',
         'PASSWORD': 'MysSchool@2018',
         'HOST': '139.199.127.192',
         'PORT': '3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'test',
+#         'USER': 'root',
+#         'PASSWORD': 'MysSchool@2018',
+#         'HOST': '139.199.127.192',
+#         'PORT': '3306',
+#     }
+# }
 
 # DATABASES = {
 #     'default': {
