@@ -85,27 +85,27 @@ WSGI_APPLICATION = 'MysSchool.wsgi.application'
 #         'PORT': '3306',
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
-        'USER': 'root',
-        'PASSWORD': 'MysSchool@2018',
-        'HOST': '139.199.127.192',
-        'PORT': '3306',
-    }
-}
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'mys_school',
+#         'NAME': 'test',
 #         'USER': 'root',
-#         'PASSWORD': '123456',
-#         'HOST': '127.0.0.1',
+#         'PASSWORD': 'MysSchool@2018',
+#         'HOST': '139.199.127.192',
 #         'PORT': '3306',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mys_school',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
 
 
 # Password validation
