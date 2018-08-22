@@ -33,7 +33,7 @@ def UserInfo(request):
         person_table_update = mysql_db.Person.objects.get(user_id=user_id)
         person_table_update.update_time = public_methods.get_date_time(1, 1)
 
-        if sex != "":
+        if sex != "" and sex != "undefined":
             person_table_update.sex = sex
 
         if phone != "":
