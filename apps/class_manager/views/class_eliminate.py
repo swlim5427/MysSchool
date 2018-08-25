@@ -41,11 +41,33 @@ def class_eliminate(request):
 
             return JsonResponse(response)
 
+        if post["messageType"] == "teacherInit":
+
+            student_list_info = mysql_db.ClassRelationStudent.objects.filter(class_id=class_id, status=1).values(
+                    "user_id", "name", "age")
+            student_info = []
+
+            for i in range(len(student_list_info)):
+
+                student_id = student_list_info[i]["user_id"]
+                student_name = student_list_info[i]["name"]
+                left_period = role_db.Student.objects.filter(user_id=student_id).values("left_periods")
+
+                student_info.append({
+                    "userId": student_id,
+                    "name": student_name,
+                    "leftPeriod": left_period[0]["left_periods"]
+                })
+
+            response = {"studentInfo": student_info}
+
+            return JsonResponse(response)
+
         if post["messageType"] == "commit":
 
             print post
-            print post["studentLeftPeriod"]
-            print post["classInfo"]
+            # print post["studentLeftPeriod"]
+            # print post["classInfo"]
 
             for i in range(len(eval(post["studentLeftPeriod"]))):
 
