@@ -62,8 +62,10 @@ def class_eliminate(request):
             teacher_id = eval(post["classInfo"])["teacher_id"]
             teacher_name = eval(post["classInfo"])["teacher_name"]
             status = 1
-            period_time = int(time.time())
-            period_data = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            period_time = int(time.mktime(time.strptime(post["periodDate"], '%Y-%m-%d')))
+            # period_data = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            period_data = post["periodDate"]
+
             class_time = eval(post["classInfo"])["class_start_time"] + " - " + eval(post["classInfo"])["class_end_time"]
             class_week = public_methods.week(eval(post["classInfo"])["class_week"])
             class_time_info = class_week + "：" + class_time
@@ -80,7 +82,8 @@ def class_eliminate(request):
                     period_time=period_time,
                     period_data=period_data,
                     class_time=class_time_info,
-                    class_teacher=teacher_name
+                    class_teacher=teacher_name,
+                    teacher_id=teacher_id
                 )
                 class_period_student_add.save()
                 update_student_period = role_db.Student.objects.get(user_id=student_list[i]["userId"])
@@ -129,8 +132,11 @@ def class_eliminate(request):
             teacher_id = eval(post["classInfo"])["user_id"]
             teacher_name = eval(post["classInfo"])["name"]
             status = 1
-            period_time = int(time.time())
-            period_data = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            # period_time = int(time.time())
+            # period_data = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            period_time = int(time.mktime(time.strptime(post["periodDate"], '%Y-%m-%d')))
+            # period_data = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            period_data = post["periodDate"]
             # class_time = eval(post["classInfo"])["class_start_time"]+" - " + eval(post["classInfo"])["class_end_time"]
             # class_week = public_methods.week(eval(post["classInfo"])["class_week"])
             # class_time_info = class_week + "：" + class_time
@@ -157,7 +163,8 @@ def class_eliminate(request):
                         period_time=period_time,
                         period_data=period_data,
                         class_time=class_time_info,
-                        class_teacher=teacher_name
+                        class_teacher=teacher_name,
+                        teacher_id=teacher_id
                     )
                     class_period_student_add.save()
                     update_student_period = role_db.Student.objects.get(user_id=student_list[i]["userId"])

@@ -36,16 +36,16 @@ def period_statistics_teacher(request):
                 else:
                     m_e = public_methods.mkt_time(post["year"] + "-" + str(int(post["month"])+1) + "-" + "1")
 
-            period_count = mysql_db.ClassPeriodTeacher.objects.filter(
+            period_count = mysql_db.ClassPeriodStudent.objects.filter(
                     period_time__gt=m_s, period_time__lt=m_e
             ).filter(
-                    user_id=teacher_id
+                    teacher_id=teacher_id
             ).values(
-                    'user_id', "name"
+                    'teacher_id', "class_teacher"
             ).annotate(
                     periodCount=Count('user_id')
             ).order_by(
-                    "status", "user_id"
+                    "teacher_id"
             )
 
             print period_count.query

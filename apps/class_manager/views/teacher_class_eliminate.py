@@ -62,8 +62,10 @@ def teacher_class_eliminate(request):
             teacher_id = eval(post["classInfo"])["teacher_id"]
             teacher_name = eval(post["classInfo"])["teacher_name"]
             status = 0
-            period_time = int(time.time())
-            period_data = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            # period_time = int(time.time())
+            # period_data = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            period_time = int(time.mktime(time.strptime(post["periodDate"], '%Y-%m-%d')))
+            period_data = post["periodDate"]
             class_time = eval(post["classInfo"])["class_start_time"] + " - " + eval(post["classInfo"])["class_end_time"]
             class_week = public_methods.week(eval(post["classInfo"])["class_week"])
             class_time_info = class_week + "：" + class_time
