@@ -42,7 +42,9 @@ def student_list(request):
                 ~Q(user_id=select_student_list[4]["user_id"]),
                 ~Q(user_id=select_student_list[5]["user_id"])
         ).filter(name__contains=user_name, status=1).values(
-                "user_id", "name", "age", "periods", "left_periods", "contract_id").order_by("contract_id")
+                "user_id", "name", "age", "periods", "left_periods", "contract_id"
+        ).filter(left_periods__gt=0
+                 ).order_by("contract_id")
 
         print get_student_list
 

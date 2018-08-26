@@ -49,7 +49,8 @@ def class_edit(request):
                     ~Q(user_id=select_student_list[3]["user_id"]),
                     ~Q(user_id=select_student_list[4]["user_id"]),
                     ~Q(user_id=select_student_list[5]["user_id"])
-            ).filter(status=1).values("user_id", "name", "age", "periods", "left_periods")
+            ).filter(status=1).filter(left_periods__gt=0
+                 ).values("user_id", "name", "age", "periods", "left_periods")
 
             for i in range(len(select_student_list)):
                 try:
