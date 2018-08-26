@@ -134,7 +134,7 @@ def class_eliminate(request):
         if post["messageType"] == "teacherCommit":
 
             print post
-            print post["studentLeftPeriod"]
+            # print post["studentLeftPeriod"]
             print eval(post["classInfo"])["id"]
 
             for i in range(len(eval(post["studentLeftPeriod"]))):
