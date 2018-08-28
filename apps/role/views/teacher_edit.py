@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 from apps.role import models as mysql_db
+from apps.class_manager import models as class_manager_db
 from public import public_methods
 # from django.http import HttpResponse
 from django.http import JsonResponse
@@ -56,6 +57,22 @@ def teacher_edit(request):
             update_teacher.salary = salary
             update_teacher.level = level
             update_teacher.school = school
+
+            update_class_info = class_manager_db.ClassInfo.objects.filter(teacher_id=user_id)
+            update_class_info.update(teacher_name=name)
+
+            update_class_period_student = class_manager_db.ClassPeriodStudent.objects.filter(teacher_id=user_id)
+            # update_class_period_student.class_teacher = name
+            update_class_period_student.update(class_teacher=name)
+
+            update_class_period_teacher = class_manager_db.ClassPeriodTeacher.objects.filter(user_id=user_id)
+            update_class_period_teacher.update(name=name)
+
+            update_class_period_teacherself = class_manager_db.ClassPeriodTeacherSelf.objects.filter(user_id=user_id)
+            update_class_period_teacherself.update(name=name)
+
+            update_class_relation_teacher = class_manager_db.ClassRelationTeacher.objects.filter(user_id=user_id)
+            update_class_relation_teacher.update(name=name)
 
             try:
                 update_person.save()
