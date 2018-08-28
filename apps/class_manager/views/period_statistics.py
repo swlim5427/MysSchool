@@ -46,7 +46,7 @@ def period_statistics(request):
             #         "user_id"
             # )
 
-            period_count = mysql_db.ClassPeriodStudent.objects.filter(period_time__gt=m_s, period_time__lt=m_e).values(
+            period_count = mysql_db.ClassPeriodStudent.objects.filter(period_time__gte=m_s, period_time__lt=m_e).values(
                     'teacher_id',
                     'class_teacher'
             ).annotate(
