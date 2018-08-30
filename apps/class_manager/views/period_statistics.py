@@ -55,8 +55,71 @@ def period_statistics(request):
                     'teacher_id'
             )
 
+
+            print period_count
+
             print period_count.query
 
             teacher_list = json.dumps(list(period_count))
 
             return HttpResponse(teacher_list)
+
+        if post["messageType"] == "indexPeriodsList":
+
+            print post["messageType"]
+
+            print post["year"]
+
+            period_month = {
+                "Jan": 0,
+                "Feb": 0,
+                "Mar": 0,
+                "Apr": 0,
+                "May": 0,
+                "June": 0,
+                "July": 0,
+                "Aug": 0,
+                "Sept": 0,
+                "Oct": 0,
+                "Nov": 0,
+                "Dec": 0
+            }
+
+            period_list = []
+
+            for i in range(1, 13):
+
+                m_s = public_methods.mkt_time(post["year"] + "-" + str(i) + "-" + "1")
+
+                if i == 12:
+                    m_e = public_methods.mkt_time(str(int(post["year"])+1) + "-" + "1" + "-" + "1")
+                else:
+                    m_e = public_methods.mkt_time(post["year"] + "-" + str(i+1) + "-" + "1")
+
+                period_count = mysql_db.ClassPeriodStudent.objects.filter(
+                        period_time__gte=m_s,
+                        period_time__lt=m_e).count()
+                # print period_month.values()
+                # print i
+                period_list.append(period_count)
+
+            period_month.update({
+                "Jan": period_list[0],
+                "Feb": period_list[1],
+                "Mar": period_list[2],
+                "Apr": period_list[3],
+                "May": period_list[4],
+                "June": period_list[5],
+                "July": period_list[6],
+                "Aug": period_list[7],
+                "Sept": period_list[8],
+                "Oct": period_list[9],
+                "Nov": period_list[10],
+                "Dec": period_list[11]
+            })
+
+            print period_month
+
+            period_month = json.dumps(period_month)
+
+            return HttpResponse(period_month)
