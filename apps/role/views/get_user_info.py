@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 #
-# from __future__ import unicode_literals
-#
-# # from django.http import JsonResponse
-# from django.http import HttpResponse
-# from django.views.decorators.csrf import csrf_exempt
-# # from django.forms.models import model_to_dict
-# from django.core import serializers
-# from django.shortcuts import render_to_response
-# from apps.role import models as mysql_db
-# # from public import public_methods
+from __future__ import unicode_literals
+
+# from django.http import JsonResponse
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+# from django.forms.models import model_to_dict
+from django.core import serializers
+from django.shortcuts import render_to_response
+from apps.role import models as mysql_db
+# from public import public_methods
 #
 #
 # @csrf_exempt
@@ -60,7 +60,7 @@ def get_user_info(request):
     # project_file = open("D:\project\workspace\deployment\playbooks\conf\upstream_info.txt","r")
 
     node = [1, 2, 3, 4, 5, 6]
-
+    mysql_db.Student
 
     # for proj in project_file:
     #     proj = proj.split('\n')[0]
@@ -70,4 +70,4 @@ def get_user_info(request):
 
     directory.setdefault('proj', node)
 
-    return render(request, 'index.html', directory)
+    # return render(request, 'index.html', directory)

@@ -62,7 +62,8 @@ def student_add(request):
                 name=name,
                 user_id=user_id,
                 status=status,
-                contract_id=contract_id
+                contract_id=contract_id,
+                price_period=int(price)/int(periods)
         )
 
         try:

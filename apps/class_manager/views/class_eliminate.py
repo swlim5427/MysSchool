@@ -30,11 +30,14 @@ def class_eliminate(request):
                 student_id = student_list_info[i]["user_id"]
                 student_name = student_list_info[i]["name"]
                 left_period = role_db.Student.objects.filter(user_id=student_id).values("left_periods")
+                price_period = role_db.Student.objects.filter(user_id=student_id).values("price_period")
+
 
                 student_info.append({
                     "userId": student_id,
                     "name": student_name,
-                    "leftPeriod": left_period[0]["left_periods"]
+                    "leftPeriod": left_period[0]["left_periods"],
+                    "pricePeriod": price_period[0]["price_period"]
                 })
 
             response = {"studentInfo": student_info}
@@ -52,11 +55,13 @@ def class_eliminate(request):
                 student_id = student_list_info[i]["user_id"]
                 student_name = student_list_info[i]["name"]
                 left_period = role_db.Student.objects.filter(user_id=student_id).values("left_periods")
+                price_period = role_db.Student.objects.filter(user_id=student_id).values("price_period")
 
                 student_info.append({
                     "userId": student_id,
                     "name": student_name,
-                    "leftPeriod": left_period[0]["left_periods"]
+                    "leftPeriod": left_period[0]["left_periods"],
+                    "pricePeriod": price_period[0]["price_period"]
                 })
 
             response = {"studentInfo": student_info}
@@ -105,7 +110,8 @@ def class_eliminate(request):
                     period_data=period_data,
                     class_time=class_time_info,
                     class_teacher=teacher_name,
-                    teacher_id=teacher_id
+                    teacher_id=teacher_id,
+                    price_period=student_list[i]["pricePeriod"]
                 )
                 class_period_student_add.save()
                 update_student_period = role_db.Student.objects.get(user_id=student_list[i]["userId"])
@@ -186,7 +192,8 @@ def class_eliminate(request):
                         period_data=period_data,
                         class_time=class_time_info,
                         class_teacher=teacher_name,
-                        teacher_id=teacher_id
+                        teacher_id=teacher_id,
+                        price_period=student_list[i]["pricePeriod"]
                     )
                     class_period_student_add.save()
                     update_student_period = role_db.Student.objects.get(user_id=student_list[i]["userId"])
