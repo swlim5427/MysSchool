@@ -10,6 +10,7 @@ class Person(models.Model):
     user_id = models.CharField('用户id',  max_length=255, unique=True)
     user_type = models.CharField('用户类型',  max_length=255, null=True)
     create_time = models.CharField('创建时间',  max_length=255, null=True)
+    create_date = models.CharField('创建时间戳',  max_length=255, null=True)
     phone = models.CharField('电话号码',  max_length=255, null=True)
     password = models.CharField('密码',  max_length=255, null=True)
     status = models.CharField('状态（1：在职/在学，0：离职/退学）',  max_length=255, null=True)
@@ -22,7 +23,7 @@ class Person(models.Model):
                self.create_time, self.phone, \
                self.password, self.status, \
                self.update_time, self.sex, \
-               self.user_name
+               self.user_name, self.create_date
 
     '''
     user_id：用户id
@@ -34,6 +35,7 @@ class Person(models.Model):
     update_time：更新日期
     sex：性别（0：女，1：男)
     user_name：用户名（登陆名）
+    create_date：创建时间戳
 
     '''
 
@@ -91,12 +93,13 @@ class Student(models.Model):
     periods = models.CharField('报名课时',  max_length=255, null=True)
     left_periods = models.CharField('剩余课时',  max_length=255, null=True)
     entry_time = models.CharField('报名日期',  max_length=255, null=True)
+    entry_date = models.CharField('创建时间戳',  max_length=255, null=True)
     leave_time = models.CharField('学完日期',  max_length=255, null=True)
     school = models.CharField('幼儿园/学校',  max_length=255, null=True)
     name = models.CharField('姓名',  max_length=255, null=True)
     status = models.CharField('状态',  max_length=255, null=True)
     contract_id = models.CharField('合同编号',  max_length=255, null=True)
-    price_period = models.CharField('每课时价格',  max_length=255, null=True)
+    price_period = models.FloatField('每课时价格')
 
     def __unicode__(self):
         return self.wx, self.study_type, \
@@ -105,7 +108,8 @@ class Student(models.Model):
                self.entry_time, self.leave_time, \
                self.user_id, self.school, \
                self.name, self.status, \
-               self.contract_id, self.price_period
+               self.contract_id, self.price_period, \
+               self.entry_date
 
     '''
     user_id：用户id
@@ -123,4 +127,5 @@ class Student(models.Model):
     status：状态（0 未在读，1 在读）
     contract_id：合同编号
     price_period：每课时价格
+    entry_date：创建时间戳
     '''

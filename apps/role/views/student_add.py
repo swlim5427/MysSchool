@@ -27,14 +27,21 @@ def student_add(request):
         contract_id = post["contractId"]
         name = post["studentName"]
         phone = post["studentPhone"]
-        create_time = now_time
+        try:
+            create_date = post["entryDate"]
+            create_time = int(time.mktime(time.strptime(post["entryDate"], '%Y-%m-%d')))
+        except:
+            create_time = now_time
+            create_date = now_time
+
         sex = post["studentSex"]
         age = post["studentAge"]
         price = post["studentPrice"]
         periods = post["studentPeriods"]
         left_periods = post["studentPeriods"]
         school = post["studentSchool"]
-        entry_time = now_time
+        entry_date = post["entryDate"]
+        entry_time= int(time.mktime(time.strptime(post["entryDate"], '%Y-%m-%d')))
         status = 1
         user_name = user_id
         pass_word = user_id
@@ -44,6 +51,7 @@ def student_add(request):
                 user_id=user_id,
                 user_type=user_type,
                 create_time=str(create_time),
+                create_date=create_date,
                 phone=phone,
                 password=pass_word,
                 status=status,
@@ -58,6 +66,7 @@ def student_add(request):
                 periods=periods,
                 left_periods=left_periods,
                 entry_time=entry_time,
+                entry_date=entry_date,
                 school=school,
                 name=name,
                 user_id=user_id,

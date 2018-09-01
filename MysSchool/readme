@@ -39,6 +39,6 @@ http返回状态码
 =======================================
 课程编号：
 1100001----
-UPDATE role_student SET price_period=price/periods
+UPDATE role_student SET price_period=TRUNCATE(price/periods,5)
 
 UPDATE class_manager_classperiodstudent SET price_period=(select `role_student`.`price_period` from `role_student` where `class_manager_classperiodstudent`.`user_id` = `role_student`.`user_id`)
