@@ -40,8 +40,12 @@ def student_add(request):
         periods = post["studentPeriods"]
         left_periods = post["studentPeriods"]
         school = post["studentSchool"]
-        entry_date = post["entryDate"]
-        entry_time= int(time.mktime(time.strptime(post["entryDate"], '%Y-%m-%d')))
+        try:
+            entry_date = post["entryDate"]
+            entry_time= int(time.mktime(time.strptime(post["entryDate"], '%Y-%m-%d')))
+        except:
+            entry_date = now_time
+            entry_time = now_time
         status = 1
         user_name = user_id
         pass_word = user_id
