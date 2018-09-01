@@ -143,7 +143,7 @@ class ClassPeriodStudent(models.Model):
     class_time = models.CharField('上课时间', max_length=255, null=True)
     class_teacher = models.CharField('上课老师', max_length=255, null=True)
     teacher_id = models.CharField('上课老师id', max_length=255, null=True)
-    price_period = models.FloatField('每课时价格')
+    price_period = models.FloatField('每课时价格', null=True)
 
     def __unicode__(self):
         return self.user_id, self.name, \

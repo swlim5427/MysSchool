@@ -99,7 +99,7 @@ class Student(models.Model):
     name = models.CharField('姓名',  max_length=255, null=True)
     status = models.CharField('状态',  max_length=255, null=True)
     contract_id = models.CharField('合同编号',  max_length=255, null=True)
-    price_period = models.FloatField('每课时价格')
+    price_period = models.FloatField('每课时价格', null=True)
 
     def __unicode__(self):
         return self.wx, self.study_type, \
