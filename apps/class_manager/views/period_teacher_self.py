@@ -37,7 +37,7 @@ def period_teacher_self(request):
                     m_e = public_methods.mkt_time(post["year"] + "-" + str(int(post["month"])+1) + "-" + "1")
 
             period_count = mysql_db.ClassPeriodTeacherSelf.objects.filter(
-                    period_time__gt=m_s, period_time__lt=m_e
+                    period_time__gte=m_s, period_time__lt=m_e
             ).filter(
                     user_id=teacher_id
             ).filter(
