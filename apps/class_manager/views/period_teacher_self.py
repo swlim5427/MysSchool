@@ -69,3 +69,35 @@ def period_teacher_self(request):
             teacher_list = json.dumps(list(period_commit_list))
 
             return HttpResponse(teacher_list)
+
+        if post["messageType"] == "waitCommitList":
+
+            if post["month"] == "13":
+
+                m_s = public_methods.mkt_time(post["year"] + "-" + "1" + "-" + "1")
+                m_e = public_methods.mkt_time(str(int(post["year"])+1) + "-" + "1" + "-" + "1")
+
+            else:
+
+                m_s = public_methods.mkt_time(post["year"] + "-" + post["month"] + "-" + "1")
+
+                if post["month"] == "12":
+                    m_e = public_methods.mkt_time(str(int(post["year"])+1) + "-" + "1" + "-" + "1")
+                else:
+                    m_e = public_methods.mkt_time(post["year"] + "-" + str(int(post["month"])+1) + "-" + "1")
+
+            wait_commit_list = mysql_db.ClassPeriodTeacherSelf.objects.filter(
+                    period_time__gte=m_s, period_time__lt=m_e
+            ).filter(
+                    user_id=teacher_id
+            ).filter(
+                    status=0
+            ).values(
+
+            ).all().order_by("id")
+
+            print wait_commit_list.query
+
+            wait_commit_list = json.dumps(list(wait_commit_list))
+
+            return HttpResponse(wait_commit_list)

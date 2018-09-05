@@ -6,7 +6,7 @@ from public import public_methods
 from django.db.models import Count, Sum
 from apps.class_manager import models as mysql_db
 from apps.role import models as role_db
-from django.http import JsonResponse
+# from django.http import JsonResponse
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -140,6 +140,8 @@ def period_statistics(request):
                 sell_income = role_db.Student.objects.filter(
                         entry_time__gte=m_s,
                         entry_time__lt=m_e
+                ).filter(
+                        status=1
                 ).values(
                         'price'
                 ).aggregate(
@@ -152,7 +154,6 @@ def period_statistics(request):
 
             period_month = return_function(period_income_list)
             return HttpResponse(period_month)
-
 
 
 def return_function(period_list):
