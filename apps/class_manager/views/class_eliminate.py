@@ -4,12 +4,12 @@ from __future__ import unicode_literals
 from apps.class_manager import models as mysql_db
 from apps.role import models as role_db
 from public import public_methods
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
+# import json
 import time
-import datetime
+# import datetime
 
 
 @csrf_exempt
@@ -31,7 +31,6 @@ def class_eliminate(request):
                 student_name = student_list_info[i]["name"]
                 left_period = role_db.Student.objects.filter(user_id=student_id).values("left_periods")
                 price_period = role_db.Student.objects.filter(user_id=student_id).values("price_period")
-
 
                 student_info.append({
                     "userId": student_id,
