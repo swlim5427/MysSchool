@@ -71,4 +71,4 @@ def get_user_info(request):
     directory.setdefault('proj', node)
 
     # return render(request, 'index.html', directory)
-    HttpResponse("a")
+    return HttpResponse("a")
