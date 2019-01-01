@@ -118,6 +118,9 @@ def period_statistics(request):
 
                 print period_income
 
+                if period_income["period_income"] == None:
+                    period_income["period_income"] = 0
+
                 period_income_list.append(period_income["period_income"])
 
             period_month = return_function(period_income_list)
@@ -129,7 +132,7 @@ def period_statistics(request):
 
             print post["year"]
 
-            period_income_list = []
+            sell_income_list = []
 
             for i in range(1, 13):
 
@@ -153,9 +156,12 @@ def period_statistics(request):
 
                 print sell_income
 
-                period_income_list.append(sell_income["sell_income"])
+                if sell_income["sell_income"] == None:
+                    sell_income["sell_income"] = 0
 
-            period_month = return_function(period_income_list)
+                sell_income_list.append(sell_income["sell_income"])
+
+            period_month = return_function(sell_income_list)
             return HttpResponse(period_month)
 
 
