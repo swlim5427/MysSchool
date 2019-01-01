@@ -28,6 +28,10 @@ def student_periods_list(request):
                     m_s = public_methods.mkt_time(post["year"] + "-" + "1" + "-" + "1")
                     m_e = public_methods.mkt_time(str(int(post["year"])+1) + "-" + "1" + "-" + "1")
 
+                elif post["month"] == "0":
+                    m_s = public_methods.mkt_time(str(int(post["year"])-1) + "-" + "12" + "-" + "1")
+                    m_e = public_methods.mkt_time(post["year"] + "-" + "1" + "-" + "1")
+
                 else:
 
                     m_s = public_methods.mkt_time(post["year"] + "-" + post["month"] + "-" + "1")
