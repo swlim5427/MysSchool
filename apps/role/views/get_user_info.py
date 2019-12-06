@@ -72,3 +72,8 @@ def get_user_info(request):
 
     # return render(request, 'index.html', directory)
     return HttpResponse("a")
+
+
+def index(request):
+    print request
+    return render(request, 'index.html')

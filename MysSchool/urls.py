@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^update_user_info/$', update_user_info.UserInfo),
     url(r'^user_info/$', user_info.user_info),
     url(r'^g/$', get_user_info.get_user_info),
+    url(r'^$', get_user_info.index),
     url(r'^curriculum_add/$', curriculum_add.curriculum_add),
     url(r'^curriculum_list/$', curriculum_list.curriculum_list),
     url(r'^assortment_list/$', curriculum_list.assortment_list),
