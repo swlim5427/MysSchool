@@ -22,7 +22,8 @@ def period_statistics(request):
         print post
 
         if post["messageType"] == "list":
-
+            year = "2021"
+            post["year"] = year
             if post["month"] == "13":
 
                 m_s = public_methods.mkt_time(post["year"] + "-" + "1" + "-" + "1")
